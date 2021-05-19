@@ -34,21 +34,20 @@ const ACTIVITIES: {
 // Create Slash Commands if not present
 slash.commands.all().then((e) => {
   if (e.size !== 2) {
-    slash.commands.bulkEdit([
       {
         name: "gra",
-        description: "Wyatartuj grę na kanale głosowym.",
+        description: "Wystartuj grę na kanale.",
         options: [
           {
             name: "kanał",
             type: slash.SlashCommandOptionType.CHANNEL,
-            description: "Kanał, na którym chcesz rozpocząć grę.",
+            description: "Kanał, na którym chcesz wystartować grę.",
             required: true,
           },
           {
             name: "gra",
             type: slash.SlashCommandOptionType.STRING,
-            description: "Gra, którą chcesz wystartować.",
+            description: "Gra do wystartowania.",
             required: true,
             choices: Object.entries(ACTIVITIES).map((e) => ({
               name: e[1].name,
@@ -64,12 +63,12 @@ slash.commands.all().then((e) => {
 slash.handle("gra", (d) => {
   if (!d.guild) return;
   const channel = d.option<slash.InteractionChannel>("channel");
-  const activity = ACTIVITIES[d.option<string>("activity")];
+  const activity = ACTIVITIES[d.option<string>("gra")];
   if (!channel || !activity) {
     return d.reply("Zła interakcja.", { ephemeral: true });
   }
   if (channel.type !== slash.ChannelTypes.GUILD_VOICE) {
-    return d.reply("Aktywności można wystartować tylko na kanałach głosowych.", {
+    return d.reply("Aktywności tylko na kanałach głosowych.", {
       ephemeral: true,
     });
   }
@@ -84,16 +83,16 @@ slash.handle("gra", (d) => {
     })
     .then((inv) => {
       d.reply(
-        `[Kliknij tutaj, by wystartować ${activity.name} w ${channel.name}.](<https://discord.gg/${inv.code}>)`
+        `[Kliknij tutaj, by zagrać w ${activity.name} na ${channel.name}.](<https://discord.gg/${inv.code}>)`
       );
     })
     .catch((e) => {
       console.log("Failed", e);
-      d.reply("Nie udało się :(", { ephemeral: true });
+      d.reply("Bład.", { ephemeral: true });
     });
 });
 
 // Handle for any other commands received.
-slash.handle("*", (d) => d.reply("Dziwna ta komenda", { ephemeral: true }));
+slash.handle("*", (d) => d.reply("Nieznana komenda", { ephemeral: true }));
 // Log all errors.
 slash.client.on("interactionError", console.log);
