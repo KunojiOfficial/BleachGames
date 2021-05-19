@@ -31,18 +31,17 @@ const ACTIVITIES: {
   },
 };
 
-// Create Slash Commands if not present
 slash.commands.all().then((e) => {
   if (e.size !== 2) {
     slash.commands.bulkEdit([
       {
         name: "gra",
-        description: "Wystartuj grę na kanale.",
+        description: "Wystartuj grę na kanale głosowym.",
         options: [
           {
             name: "kanał",
             type: slash.SlashCommandOptionType.CHANNEL,
-            description: "Kanał, na którym chcesz wystartować grę.",
+            description: "Kanał, na którym chcesz wystartować.",
             required: true,
           },
           {
