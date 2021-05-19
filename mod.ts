@@ -27,7 +27,7 @@ const ACTIVITIES: {
   },
   chess: {
     id: "832012586023256104",
-    name: "CG 2 Dev",
+    name: "Szachy",
   },
 };
 
