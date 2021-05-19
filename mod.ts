@@ -65,9 +65,6 @@ slash.handle("gra", (d) => {
   if (!d.guild) return;
   const channel = d.option<slash.InteractionChannel>("channel");
   const activity = ACTIVITIES[d.option<string>("activity")];
-  if (!channel || !activity) {
-    return d.reply("Zła interakcja.", { ephemeral: true });
-  }
   if (channel.type !== slash.ChannelTypes.GUILD_VOICE) {
     return d.reply("Aktywności można wystartować tylko na kanałach głosowych.", {
       ephemeral: true,
