@@ -62,7 +62,7 @@ slash.commands.all().then((e) => {
 
 slash.handle("gra", (d) => {
   if (!d.guild) return;
-  const channel = d.option<slash.InteractionChannel>("channel");
+  const channel = d.option<slash.InteractionChannel>("kanał");
   const activity = ACTIVITIES[d.option<string>("gra")];
   if (!channel || !activity) {
     return d.reply("Zła interakcja.", { ephemeral: true });
